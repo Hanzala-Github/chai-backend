@@ -13,7 +13,7 @@
 // ****This is the second approach to create the asyncHandler with the help of promise**//
 
 const asyncHandler = (requestHandler) => {
-  (req, res, next) => {
+  return (req, res, next) => {
     Promise.resolve(requestHandler(req, res, next)).catch((error) =>
       next(error)
     );
