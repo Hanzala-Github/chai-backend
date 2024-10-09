@@ -10,7 +10,7 @@ cloudinary.config({
 
 const uploadOnCloudinary = async (localFilePath) => {
   try {
-    if (!localFilePath) throw new Error("localFilePath is not avalible");
+    if (!localFilePath) return null;
 
     // upload the file on cloudinary
 
@@ -19,8 +19,8 @@ const uploadOnCloudinary = async (localFilePath) => {
     });
 
     // file has been uploaded successfully
-
-    console.log("file has been uploaded successfully ", response.url);
+    // console.log("file has been uploaded successfully ", response.url);
+    fs.unlinkSync(localFilePath);
     return response;
   } catch (error) {
     console.log("Error during upload : ", error.message);
