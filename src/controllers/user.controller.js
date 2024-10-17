@@ -338,6 +338,7 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, user, "User coverImage update successfully"));
 });
+// **getUserChannelProfile*//
 
 const getUserChannelProfile = asyncHandler(async (req, res) => {
   const { username } = req.params;
@@ -411,7 +412,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
       new ApiResponse(200, channel[0], "User channel fetched successfully")
     );
 });
-
+// **getWatchHistory**//
 const getWatchHistory = asyncHandler(async (req, res) => {
   //.................. extra if statement........................//
   if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
