@@ -15,7 +15,20 @@ import { verifyOwnership } from "../middlewares/ownerShip.middleware.js";
 const router = Router();
 
 // ... route of CreateVideo
-router.route("/create-video").post(verifyJWT, upload, CreateVideo);
+router.route("/create-video").post(
+  verifyJWT,
+  upload.fields([
+    {
+      name: "videoFile",
+      maxCount: 1,
+    },
+    {
+      name: "thumbnail",
+      maxCount: 1,
+    },
+  ]),
+  CreateVideo
+);
 
 // ... route of GetVideosWithPagination
 router
@@ -27,10 +40,22 @@ router
   .route("/single-video/:id")
   .get(verifyJWT, verifyOwnership, GetSingleVideo);
 
-// ... route of GetSingleVideo
-router
-  .route("/update-video/:id")
-  .put(verifyJWT, verifyOwnership, upload, UpdateVideo);
+// ... route of updateVideo
+router.route("/update-video/:id").put(
+  verifyJWT,
+  verifyOwnership,
+  upload.fields([
+    {
+      name: "videoFile",
+      maxCount: 1,
+    },
+    {
+      name: "thumbnail",
+      maxCount: 1,
+    },
+  ]),
+  UpdateVideo
+);
 
 // ... route of DeleteVideo
 router
@@ -41,3 +66,6 @@ router
 router
   .route("/toggle/publish/:videoId")
   .patch(verifyJWT, verifyOwnership, togglePublishStatus);
+
+// Export the route
+export default router;

@@ -3,6 +3,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Video } from "../models/video.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import fs from "fs";
+
 // create the video
 const CreateVideo = asyncHandler(async (req, res) => {
   const { title, description, duration, owner } = req.body;
@@ -18,6 +20,10 @@ const CreateVideo = asyncHandler(async (req, res) => {
   if (!uploadResult) {
     throw new ApiError(500, "Failed to upload video");
   }
+
+  // if (video.thumbnail) {
+  //   await uploadOnCloudinary.uploader.destroy(video.thumbnail.public_id);
+  // }
 
   const newVideo = new Video({
     videoFile: uploadResult?.secure_url,
@@ -112,6 +118,11 @@ const UpdateVideo = asyncHandler(async (req, res) => {
       throw new ApiError(500, "Failed to upload video to cloudinary");
     }
 
+    // delete the video from cloudinary
+    if (video.videoFile) {
+      await uploadOnCloudinary.uploader.destroy(video.videoFile.public_id);
+    }
+
     updateFields.videoFile = uploadedVideo.url;
   }
 
@@ -120,6 +131,11 @@ const UpdateVideo = asyncHandler(async (req, res) => {
 
     if (!uploadedThumbnail) {
       throw new ApiError(500, "Failed to upload thumbnail to cloudinary");
+    }
+
+    // delete the thumbnail from cloudinary
+    if (video.thumbnail) {
+      await uploadOnCloudinary.uploader.destroy(video.thumbnail.public_id);
     }
 
     updateFields.thumbnail = uploadedThumbnail.url;

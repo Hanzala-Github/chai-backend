@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import fs from "fs";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
@@ -291,15 +292,11 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
   }
 
   //...Delete the uploaded image using its public_id
-  await uploadOnCloudinary.uploader.destroy(
-    avatar.public_id,
-    (error, result) => {
-      if (error) {
-        throw new ApiError(500, "Erorr deleting the image");
-      }
-      console.log("image deleted", result);
+  fs.unlink(avatarLocalPath, (error) => {
+    if (error) {
+      console.log("Error deleting local image file");
     }
-  );
+  });
 
   const user = await User.findByIdAndUpdate(
     req.user?._id,
