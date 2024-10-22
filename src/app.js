@@ -26,4 +26,10 @@ app.use("/api/v1/videos", videoRouter);
 // comment route
 import commentRouter from "./routes/comment.routes.js";
 app.use("/api/v1/comments", commentRouter);
+
+// This is the playList route
+import playlistRouter from "./routes/playlist.routes.js";
+app.use("/api/v1/playlist", playlistRouter);
+
+// This is the export part
 export { app };
