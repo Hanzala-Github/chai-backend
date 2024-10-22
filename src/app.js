@@ -31,5 +31,9 @@ app.use("/api/v1/comments", commentRouter);
 import playlistRouter from "./routes/playlist.routes.js";
 app.use("/api/v1/playlist", playlistRouter);
 
+// This is the subscription route
+import subscriptionRouter from "./routes/subscription.routes.js";
+app.use("/api/v1/subscriptions", subscriptionRouter);
+
 // This is the export part
 export { app };
