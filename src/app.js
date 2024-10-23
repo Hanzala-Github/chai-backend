@@ -34,6 +34,9 @@ app.use("/api/v1/playlist", playlistRouter);
 // This is the subscription route
 import subscriptionRouter from "./routes/subscription.routes.js";
 app.use("/api/v1/subscriptions", subscriptionRouter);
+// This is the Tweet route
+import tweetRouter from "./routes/tweet.routes.js";
+app.use("/api/v1/tweets", tweetRouter);
 
 // This is the export part
 export { app };
