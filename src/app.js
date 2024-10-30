@@ -40,6 +40,11 @@ app.use("/api/v1/tweets", tweetRouter);
 // This is the Like route
 import likeRouter from "./routes/like.routes.js";
 app.use("/api/v1/likes", likeRouter);
-
+// This is the healthCheck route
+import healthCheckRouter from "./routes/like.routes.js";
+app.use("/api/v1/healthcheck", healthCheckRouter);
+// This is the dashBoard route
+import dashboardRouter from "./routes/like.routes.js";
+app.use("/api/v1/dashboard", dashboardRouter);
 // This is the export part
 export { app };
